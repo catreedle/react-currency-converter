@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+}
+
+header {
+  height: 30vh;
+  background: white;
+  display: flex;
+  flex-direction: row
+}
+
+h1 {
+  font-size: 5rem;
+  color:#003875;
+  width: 80vw;
+  margin-left: 3rem
+}
+
+.container {
+  background: #35dbd3;
+  height: 60vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+}
+
+.select {
+  width: 80vw;
+  height: 15vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+select, input {
+  font-size: 2rem;
+  border-radius: 1rem;
+  padding-bottom: 0;
+  font-family: "Ubuntu"
+}
+
+select {
+  background: #003875;
+  color: white;
+  width: 10rem;
+  
+}
