@@ -4,14 +4,25 @@ import Logo from "./images/logo.png"
 class Exchange extends React.Component {
   constructor(props) {
     super(props);
-    this.currencies = ["USD", "JPY", "IDR", "SGD"];
     this.cached = {};
     this.state = {
-      base: "JPY",
-      target: "IDR",
+      base: "IDR",
+      target: "EUR",
       value: 0,
-      converted: 0
+      converted: 0,
+      currencies: []
     };
+  }
+
+  componentDidMount() {
+    fetch(`https://api.exchangeratesapi.io/latest?base=${this.state.base}`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          currencies: [...Object.keys(data.rates), "EUR"]
+        })
+        
+      })
   }
 
   render() {
@@ -19,7 +30,7 @@ class Exchange extends React.Component {
       <div>
         <header>
           <h1>Currency Converter</h1>
-          <img src={Logo} alt="logo" height="80%"/>
+          <img src={Logo} alt="logo" height="80%" />
         </header>
         <div className="container">
           <div className="select">
@@ -28,7 +39,7 @@ class Exchange extends React.Component {
               name="base"
               value={this.state.base}
             >
-              {this.currencies.map(currency => (
+              {this.state.currencies.map(currency => (
                 <option key={currency} value={currency}>
                   {currency}
                 </option>
@@ -42,7 +53,7 @@ class Exchange extends React.Component {
               name="target"
               value={this.state.target}
             >
-              {this.currencies.map(currency => (
+              {this.state.currencies.map(currency => (
                 <option key={currency} value={currency}>
                   {currency}
                 </option>
@@ -72,6 +83,7 @@ class Exchange extends React.Component {
       this.recalculate
     );
   };
+
 
   recalculate = () => {
     const value = parseFloat(this.state.value);
