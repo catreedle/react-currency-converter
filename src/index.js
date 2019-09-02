@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './App.css';
-import Exchange from './FetchAPI'
+import Currency from './Currency'
+// import Exchange from './FetchAPI'
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<Exchange />, document.getElementById('root'));
+ReactDOM.render(<Currency/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
