@@ -1,5 +1,6 @@
 import React from "react";
-import Logo from "./images/logo.png"
+import Logo from "./images/logo.png";
+import { Link } from "react-router-dom"
 
 class Exchange extends React.Component {
   constructor(props) {
@@ -10,7 +11,9 @@ class Exchange extends React.Component {
       target: "EUR",
       value: 0,
       converted: 0,
-      currencies: []
+      currencies: [],
+      savedConversion: [],
+      savedConversion2: []
     };
   }
 
@@ -19,9 +22,9 @@ class Exchange extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({
-          currencies: [...Object.keys(data.rates), "EUR"]
+          currencies: [...Object.keys(data.rates)]
         })
-        
+
       })
   }
 
@@ -29,6 +32,7 @@ class Exchange extends React.Component {
     return (
       <div>
         <header>
+          <Link to="/">Back to Home</Link>
           <h1>Currency Converter</h1>
           <img src={Logo} alt="logo" height="80%" />
         </header>
@@ -61,9 +65,32 @@ class Exchange extends React.Component {
             </select>
             <input disabled={true} value={this.state.converted} />
           </div>
+          <div>
+          <button onClick={this.saveConversion}>Save</button>
+          <Link to={{
+            pathname: '/saved',
+            state: {
+              savedConversions: this.state.savedConversion
+            }
+          }}>Saved Conversions</Link>
+          <button onClick={this.saveConversion2}>Save2</button>
+          <Link to={{
+            pathname: '/saved2',
+            state: {
+              savedConversion2: this.state.savedConversion2
+            }
+          }}>Saved Conversions 2</Link>
+          </div>
         </div>
       </div>
     );
+  }
+
+  saveConversion2 = () => {
+    this.setState({
+      savedConversion2: [...this.state.savedConversion2, `${this.state.base} ${this.state.value} = ${this.state.target} ${this.state.converted} `]
+    })
+    console.log(this.state.savedConversion2)
   }
 
   makeSelection = event => {
@@ -84,6 +111,13 @@ class Exchange extends React.Component {
     );
   };
 
+  saveConversion = () => {
+    this.setState(
+      state => ({
+        savedConversion: [...state.savedConversion, `${this.state.value} ${this.state.base} = ${this.state.converted} ${this.state.target}`]
+      }))
+    console.log(this.state.savedConversion)
+  }
 
   recalculate = () => {
     const value = parseFloat(this.state.value);
@@ -114,5 +148,6 @@ class Exchange extends React.Component {
       });
   };
 }
+
 
 export default Exchange;

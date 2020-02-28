@@ -1,51 +1,20 @@
 import React from 'react';
-import './App.css';
+import LandingPage from './LandingPage';
+import Exchange from './FetchAPI';
+import Saved from './Saved'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-class Count extends React.Component {
-  constructor(props){
-      super(props)
-      this.state = {
-          count: 0
-      }
-  }
+function App() {
 
-  render() {
-      return (
-          <div>
-              <h1>{this.state.count}</h1>
-              <button onClick = {this.increment}>Increment</button>
-              <button onClick = {this.decrement}>Decrement</button>
-          </div>
-      )
-  }
-
-  componentDidMount() {
-    const count = localStorage.getItem('count')
-
-    if (count !== null) {
-      this.setState({
-        count: parseInt(count)
-      })
-    }
-
-    window.addEventListener('beforeunload', () => {
-      localStorage.setItem('count', this.state.count)
-    })
-  }
-
-  increment = () => {
-      this.setState({
-          count: this.state.count + 1
-      })
-  }
-
-  decrement = () => {
-      this.setState({
-          count: this.state.count - 1
-      })
-  }
+    return (
+        <div>
+            <Router>
+                <Route exact path="/" component={LandingPage} />
+                <Route path="/exchange" component={Exchange} />
+                <Route path="/saved" component={Saved} />
+            </Router>
+        </div>
+    )
 }
 
-
-
-export default Count;
+export default App
